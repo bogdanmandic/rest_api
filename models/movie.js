@@ -21,7 +21,13 @@ var MovieSchema = new mongoose.Schema({
     releaseDate: {
         type: Date,
         default: Date.now
-    }
+    },
+    actors: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Actor'
+        }
+    ]
 });
 
 module.exports = mongoose.model('Movie', MovieSchema);

@@ -6,6 +6,7 @@ const methodOverride = require('method-override');
 
 //Requiring route files
 const movieRoutes = require('./routes/movies');
+const actorRoutes = require('./routes/actors');
 
 mongoose.connect('mongodb://localhost/movie_app', {
     useMongoClient: true
@@ -18,6 +19,7 @@ app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => res.send('Hello CA!'));
 app.use(movieRoutes);
+app.use(actorRoutes);
 app.get('*', (req, res) => {
     res.status(404);
     res.send('404 Page not found');

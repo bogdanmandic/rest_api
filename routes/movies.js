@@ -1,7 +1,8 @@
 const express = require('express');
 var mongoose = require('mongoose');
 const router = express.Router();
-const Movie = require('../models/movie.js');
+const Movie = require('../models/movie');
+const Actor = require('../models/actor');
 // const validator = require('validator');
 
 mongoose.connect('mongodb://localhost/movie_app', {
@@ -106,4 +107,21 @@ router.delete('/movies/:id', (req, res) => {
         res.redirect('/movies');
     });
 });
+
+//Add actor(s) to the Movie
+router.get('/movies/:idm/:ida', (req, res) => {
+    Movie.findById(req.params.idm, (err, foundMovie) => {
+        if (err) throw err;
+        Actor.findById(req.params.ida, (err, foundActor) => {
+            if (err) throw err;
+            foundMovie.actors.push(foundActor._id);
+            foundMovie.save();
+        });
+    });
+    res.redirect('/movies');
+});
+
+
+
+
 module.exports = router;
